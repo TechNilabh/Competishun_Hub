@@ -1,0 +1,30 @@
+
+node_modules/
+dist/
+.env
+.env.local
+
+
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
+venv/
+.venv/
+.env
+.env.*
+
+
+build/
+cache/
+*.log
+
+# Docker
+*.pid
+postgres_data/
+
+# OS
+.DS_Store
+Thumbs.db
