@@ -5,6 +5,7 @@
 	import About from '$lib/components/landing/About.svelte';
 	import Timer from '$lib/components/landing/Timer.svelte';
 	import Prizes from '$lib/components/landing/Prizes.svelte';
+	import { WavyBackground } from '$lib/components/ui/wavyBg';
 	export let data;
 </script>
 
@@ -26,8 +27,9 @@
 	<meta name="twitter:site" content="@Tahmid Choudhury" />
 </svelte:head>
 
+<WavyBackground className="max-w-4xl mx-auto pb-40">
 <HeroSection />
+</WavyBackground>
 <About />
 <Prizes />
-<Timer data={{ targetDate: data.targetDate }}/>
 <SphereMask />

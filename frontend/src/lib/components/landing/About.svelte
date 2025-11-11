@@ -1,8 +1,9 @@
 <script lang='ts'>
   import about_image from '$lib/imgs/cube8.svg';
+	import { Button } from '../ui/button';
 	import WordFadein from "../ui/text/WordFadein.svelte";
   let title = "About";
-  let des:string = "Agentic AI 2025 is a five-day hackathon hosted in collaboration with GDG NITS and ML Club NIT Silchar, running from 11 to 15 November and focused on building innovative, real-world solutions with emerging agentic AI systems. Participants team up for an intensive Vibe Coding–driven build sprint, develop prototypes, and get hands-on guidance throughout the event, culminating in an exclusive Google Expert speaker session on 15 November that dives into cutting-edge AI insights and industry perspectives. It’s the perfect space for developers and students to learn, collaborate, and push the boundaries of what’s possible with AI.";
+  let des:string = "The National Talent Hackathon 2026 is a national-level coding and innovation competition organized by the Department of Computer Science and Engineering at NIT Silchar, bringing together college students from across India to showcase their technical skills and creativity. Through three competitive rounds—ranging from aptitude and coding assessments to AI/ML-focused problem solving and an offline grand finale at the NIT Silchar campus—the event challenges participants to innovate and build real-world solutions. With free accommodation for finalists, opportunities for academic interaction, and attractive prizes and certifications, the hackathon offers a high-impact platform for students aspiring to gain national recognition and push the boundaries of technological excellence.";
 
   let heroEl: HTMLImageElement;
 	let x = 0;
@@ -51,7 +52,11 @@
     </div>
     <div class="right md:w-[60%]">
       <WordFadein words={des} />
+      <Button href='/about' >
+        <span class="font-medium">Know More</span>
+      </Button>
     </div>
   </div>
+  
 
 </section>

@@ -16,7 +16,7 @@
 
 	const menuItem = [
 		{ id: 'hero', label: 'Home', href: '/' },
-		{ id: 'hero', label: 'RSVP', href: '/' },
+		{ id: 'about', label: 'About', href: '/about' },
 		{ id: 'round', label: 'Problems', href: '/round', locked: !isUnlocked },
 	];
 

@@ -9,12 +9,8 @@
 			label: 'Contact',
 			items: [
 				{
-					href: 'mailto:anirban_ug_23@cse.nits.ac.in',
-					name: 'GDGC Nits'
-				},
-				{
 					href: 'mailto:tahmidchoudhury019@gmail.com',
-					name: 'ML CLub Nits'
+					name: 'Organize'
 				}
 			]
 		}

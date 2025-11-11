@@ -4,97 +4,101 @@
 
 @layer base {
   :root {
-    --background: 228 34% 98%; /* very light bluish-white */
-    --foreground: 240 5% 8%;   /* near-black with slight blue tint */
+    /* Pure light mode */
+    --background: 0 0% 100%;     /* WHITE */
+    --foreground: 0 0% 0%;       /* BLACK */
 
-    --card: 228 34% 98%;
-    --card-foreground: 240 5% 8%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 0%;
 
-    --popover: 228 34% 98%;
-    --popover-foreground: 240 5% 8%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 0%;
 
-    --primary: 257 90% 55%; /* neon purple */
+    /* Neon purple accent */
+    --primary: 257 90% 55%;
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 215 25% 92%;
-    --secondary-foreground: 240 5% 10%;
+    --secondary: 0 0% 95%;        /* neutral light gray */
+    --secondary-foreground: 0 0% 10%;
 
-    --muted: 220 15% 90%;
-    --muted-foreground: 220 5% 45%;
+    --muted: 0 0% 93%;
+    --muted-foreground: 0 0% 40%;
 
     --accent: 257 90% 55%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84% 60%;
+    --destructive: 0 85% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 220 15% 88%;
-    --input: 220 15% 88%;
+    --border: 0 0% 85%;
+    --input: 0 0% 85%;
     --ring: 257 90% 55%;
 
     --radius: 0.5rem;
 
-    /* Custom poster vibes */
-    --color-one: #C9CBFF; /* soft neon white-blue */
-    --color-two: #8B5CF6; /* glowing purple */
-    --color-three: #1A1A2E; /* deep navy-black */
+    /* Optional decorative colors (kept intact since they’re not UI surfaces) */
+    --color-one: #ffffff;
+    --color-two: #8B5CF6;
+    --color-three: #000000;
 
-    --prose-text: #2e2e3b;
-    --heading-text: #11111a;
-    --lead-text: #4a4a5a;
-    --border-color: #d5d7df;
+    --prose-text: #1a1a1a;
+    --heading-text: #000000;
+    --lead-text: #444444;
+    --border-color: #e5e5e5;
 
-    --color-1: 265 90% 72%;  /* bright violet */
-    --color-2: 245 85% 68%;  /* neon purple */
-    --color-3: 225 85% 66%;  /* electric indigo */
-    --color-4: 205 90% 67%;  /* vibrant blue */
-    --color-5: 190 85% 70%;  /* cyan glow */
+    /* Accent gradient palette */
+    --color-1: 265 90% 72%;
+    --color-2: 245 85% 68%;
+    --color-3: 225 85% 66%;
+    --color-4: 205 90% 67%;
+    --color-5: 190 85% 70%;
   }
 
+  /* Dark mode — PURE black & PURE white */
   .dark {
-    --background: 240 22% 6%; /* deep navy-black */
-    --foreground: 0 0% 98%;
+    --background: 0 0% 0%;       /* BLACK */
+    --foreground: 0 0% 100%;     /* WHITE */
 
-    --card: 240 22% 10%;
-    --card-foreground: 0 0% 98%;
+    --card: 0 0% 7%;
+    --card-foreground: 0 0% 100%;
 
-    --popover: 240 22% 10%;
-    --popover-foreground: 0 0% 98%;
+    --popover: 0 0% 7%;
+    --popover-foreground: 0 0% 100%;
 
-    --primary: 257 92% 64%; /* brighter purple neon */
-    --primary-foreground: 0 0% 98%;
+    /* Brighter neon purple for dark mode */
+    --primary: 257 92% 64%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 240 18% 16%;
-    --secondary-foreground: 0 0% 98%;
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 240 18% 16%;
-    --muted-foreground: 240 8% 65%;
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 70%;
 
     --accent: 257 92% 64%;
-    --accent-foreground: 0 0% 98%;
+    --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 70% 40%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 0 72% 45%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 240 18% 16%;
-    --input: 240 18% 16%;
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
     --ring: 257 92% 64%;
 
-    /* Poster neon-glow theme */
-    --color-one: #FFFFFF;
-    --color-two: #A78BFA; /* soft neon purple */
-    --color-three: #0F0F1A;
+    --color-one: #ffffff;
+    --color-two: #A78BFA;
+    --color-three: #000000; /* deep pure black */
 
-    --prose-text: #d1d5db;
-    --heading-text: #f3f4f6;
-    --lead-text: #9ca3af;
-    --border-color: #272738;
+    --prose-text: #e5e5e5;
+    --heading-text: #ffffff;
+    --lead-text: #bbbbbb;
+    --border-color: #222222;
 
-    --color-1: 265 90% 72%;  /* bright violet */
-    --color-2: 245 85% 68%;  /* neon purple */
-    --color-3: 225 85% 66%;  /* electric indigo */
-    --color-4: 205 90% 67%;  /* vibrant blue */
-    --color-5: 190 85% 70%;  /* cyan glow */
+    --color-1: 265 90% 72%;
+    --color-2: 245 85% 68%;
+    --color-3: 225 85% 66%;
+    --color-4: 205 90% 67%;
+    --color-5: 190 85% 70%;
   }
 }
 
