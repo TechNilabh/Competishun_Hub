@@ -14,6 +14,26 @@
 	export let waveOpacity: number | undefined = 0.5;
 	//   export let [key: string]: any;
 
+	const lightColors = [
+	'#FF2DA8', 
+	'#D120B3', 
+	'#8F1FFF', 
+	'#6A00F5', 
+	'#5A00E8', 
+	'#4B00DB', 
+	'#4A42FF', 
+	'#4470FF', 
+	'#4AA7FF', 
+	'#4CD6FF'  
+	];
+
+
+	const darkColors = [
+	'#4CC9F0', '#4895EF', '#4361EE', '#3F37C9', '#3A0CA3',
+	'#480CA8', '#560BAD', '#7209B7', '#B5179E', '#F72585'
+	];
+
+
 	const noise = createNoise3D();
 	let w: number, h: number, nt: number, i: number, x: number, ctx: any, canvas: any;
 
@@ -34,6 +54,7 @@
 	const updateBg = () => {
 		const isDark = document.documentElement.classList.contains('dark');
 		backgroundFill = isDark ? "black" : "white";
+		waveColors = isDark ? darkColors : lightColors;
 	};
 
 	onMount(() => {
@@ -70,7 +91,7 @@
 		render();
 	};
 
-	const waveColors = colors ?? ['#3F51B5', '#8093FF', '#3A4AA6', '#313F8C', '#242E66', '#000B4D', '#000833'];
+	let waveColors: string[] = lightColors;
 	const drawWave = (n: number) => {
 		nt += getSpeed();
 		for (i = 0; i < n; i++) {
