@@ -1,11 +1,24 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
 	import Editor from './editor.svelte';
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 
-	let language = 'python';
 	export const ssr = false;
 
+	let language = "python";
+	let showPreview = true;
+	let hasSubmitted = false;
+
+	interface TestCase { input: string; expected: string; }
+	interface TestResult { input: string; output: string; expected: string; passed: boolean; }
+	interface SubmitOutput { total: number; results: TestResult[]; }
+
+	let runOutput = "";           
+	let submitResult: SubmitOutput | null = null;  
+	let preview: TestCase[] = []; 
+
+	let customInput = "";
+	let running = false;
 
 	let templates: Record<string, string> = {
 		python: `# Write your solution here
@@ -22,10 +35,10 @@ int main() {
 	scanf("%d", &n);
 	printf("%d", n * 2);
 	return 0;
-}`,
+}`
+,
 		cpp: `#include <bits/stdc++.h>
 using namespace std;
-
 int main() {
 	int n;
 	cin >> n;
@@ -35,43 +48,54 @@ int main() {
 	};
 
 	let code = templates[language];
-	let customInput = "";
-	let output = "";
-	let running = false;
 
 	function changeLang(l: string) {
 		language = l;
 		code = templates[l];
 	}
 
+	$: console.debug("[Parent] code (preview):", code.slice(0,200));
+
 	async function runCode() {
 		running = true;
-		output = "Running...";
+		runOutput = "Running...";
 
 		const res = await fetch('/round/2/code/api/run', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({ code, language, input: customInput })
 		});
+
 		const data = await res.json();
-		output = data.output;
+		runOutput = data.output;
 		running = false;
 	}
 
 	async function submit() {
+		await tick();
+
 		running = true;
-		output = "Evaluating on test cases...";
+		showPreview = false;
+
+		console.debug("[Parent] submitting code (sent):", code.slice(0,200));
 
 		const res = await fetch('/round/2/code/api/submit', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
 			body: JSON.stringify({ code, language })
 		});
-		const data = await res.json();
-		output = data.output;
+
+		submitResult = await res.json();
+		hasSubmitted = true;
 		running = false;
 	}
+
+	onMount(async () => {
+		const res = await fetch('/round/2/code/api/preview');
+		preview = await res.json();
+	});
 </script>
+
 
 <section class="max-w-7xl mx-auto mt-16 px-6 pb-28">
 	<h1 class="text-3xl font-bold mb-10">Round 2 — Coding Challenge</h1>
@@ -97,7 +121,7 @@ int main() {
 
 			<!-- EDITOR -->
 			<div class="rounded-xl border shadow overflow-hidden">
-				<Editor bind:code {language} />
+				<Editor bind:code={code} {language} on:update:code={(e) => { code = e.detail; console.debug('[Parent] on:update:code', code.slice(0,200)) }} />
 			</div>
 		</div>
 
@@ -125,10 +149,75 @@ int main() {
 				</Button>
 			</div>
 
-			<!-- Output Panel -->
-			<div class="border rounded-xl p-4 text-sm bg-neutral-950 text-green-400 font-mono h-64 overflow-auto shadow">
-				{output}
+			<!-- RUN OUTPUT PANEL -->
+			<div class="border rounded-xl p-3 bg-neutral-900 text-green-400 font-mono text-sm">
+				<h3 class="font-bold mb-2">Run Output</h3>
+				<div class="whitespace-pre-wrap">{runOutput}</div>
 			</div>
+
+			<!-- BEFORE SUBMIT: SHOW ONLY PREVIEW -->
+			{#if showPreview}
+				<div class="space-y-4">
+					<h3 class="font-bold text-lg">Sample Test Cases (first 5)</h3>
+
+					<ul class="space-y-2">
+						{#each preview as p, i}
+							<li class="p-2 border rounded">
+								<div class="text-gray-400 text-sm">Input: {p.input}</div>
+								<div class="text-gray-400 text-sm">Expected: {p.expected}</div>
+								<div class="text-gray-500 italic text-xs">Test Case {i+1} (not submitted)</div>
+							</li>
+						{/each}
+					</ul>
+
+					<h4 class="font-semibold mt-4">Locked Test Cases</h4>
+					<ul>
+						{#each Array( preview.length + 1, 15 ) as _, i}
+							<li class="text-gray-500 text-sm">Test Case {i + 6} (locked)</li>
+						{/each}
+					</ul>
+				</div>
+			{/if}
+
+			<!-- AFTER SUBMIT -->
+			{#if submitResult}
+				<div class="space-y-4">
+					<h3 class="font-bold text-lg">
+						{submitResult.results.filter(r => r.passed).length} / {submitResult.total} Passed
+					</h3>
+
+					<h4 class="font-semibold mt-2">Sample Test Cases (first 5)</h4>
+					<ul class="space-y-2">
+						{#each submitResult.results.slice(0, 5) as r, i}
+							<li class="p-2 border rounded flex justify-between">
+								<div>
+									<div class="text-gray-400 text-sm">Input: {r.input}</div>
+									<div class="text-gray-400 text-sm">Output: {r.output}</div>
+									<div class="text-gray-400 text-sm">Expected: {r.expected}</div>
+								</div>
+								<span class={r.passed ? "text-green-400 text-xl" : "text-red-400 text-xl"}>
+									{r.passed ? "✔" : "✘"}
+								</span>
+							</li>
+						{/each}
+					</ul>
+
+					<h4 class="font-semibold mt-4">Locked Test Cases</h4>
+					<ul class="space-y-1">
+						{#each submitResult.results.slice(5) as r, i}
+							<li class="flex justify-between p-2 border rounded">
+								<div class="text-gray-500 text-sm">
+									Test Case {i + 6} (locked)
+								</div>
+								<span class={r.passed ? "text-green-400 text-xl" : "text-red-400 text-xl"}>
+									{r.passed ? "✔" : "✘"}
+								</span>
+							</li>
+						{/each}
+					</ul>
+				</div>
+			{/if}
+
 
 		</div>
 

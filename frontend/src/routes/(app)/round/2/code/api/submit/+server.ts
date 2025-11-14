@@ -8,21 +8,22 @@ import path from "path";
 export const POST: RequestHandler = async ({ request }) => {
     const { code, language } = await request.json();
 
-    const tempRoot = os.tmpdir();
-    const dir = path.join(tempRoot, `submit-${Date.now()}`);
+    // temp folder
+    const dir = path.join(os.tmpdir(), `submit-${Date.now()}`);
     mkdirSync(dir, { recursive: true });
 
     const filenameMap = {
         python: "solution.py",
         c: "solution.c",
         cpp: "solution.cpp"
-    };
+    } as const;
 
     const filename = filenameMap[language];
     const filepath = `${dir}/${filename}`;
 
     writeFileSync(filepath, code);
 
+    // Compile + run commands
     let runCmd = "";
     if (language === "python") {
         runCmd = `python "${filepath}"`;
@@ -32,7 +33,12 @@ export const POST: RequestHandler = async ({ request }) => {
         runCmd = `g++ "${filepath}" -o "${dir}/a.out" && "${dir}/a.out"`;
     }
 
-    let results = "";
+    const results: Array<{
+        input: string;
+        expected: string;
+        output: string;
+        passed: boolean;
+    }> = [];
 
     for (const t of testcases) {
         const inputPath = `${dir}/input.txt`;
@@ -46,16 +52,19 @@ export const POST: RequestHandler = async ({ request }) => {
             });
         });
 
-        const ok = output === t.expected ? "PASSED" : "FAILED";
-
-        results += `
-Test Case:
-Input: ${t.input}
-Output: ${output}
-Expected: ${t.expected}
-Result: ${ok}
-`;
+        results.push({
+            input: t.input,
+            expected: t.expected,
+            output,
+            passed: output === t.expected
+        });
     }
 
-    return new Response(JSON.stringify({ output: results }));
+    return new Response(
+        JSON.stringify({
+            total: testcases.length,
+            preview: testcases.slice(0, 5),
+            results
+        })
+    );
 };

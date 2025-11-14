@@ -4,8 +4,8 @@
   const dispatch = createEventDispatcher();
 
   let monaco: any;
-  export let code: string;
-  export let language: string;
+  export let code: string = "";
+  export let language: string = "plaintext";
   let editor: any;
   let editorEl: any;
 
@@ -22,7 +22,8 @@
 
     editor.onDidChangeModelContent(() => {
       const value = editor.getValue();
-      dispatch("code", value);   
+	  console.debug("[Editor] dispatch update:code", value.slice(0, 200));
+      dispatch("update:code", value);   
     });
   });
 
@@ -31,6 +32,7 @@
   }
 
   $: if (editor && code !== editor.getValue()) {
+	console.debug("[Editor] parent changed code — setting editor value");
     editor.setValue(code); 
   }
 </script>
