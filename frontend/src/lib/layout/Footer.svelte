@@ -36,14 +36,14 @@
 <footer class="relative overflow-hidden mt-32 text-center flex flex-col items-center  shrink-0 isolate z-10">
 
 	<!-- Light mode DotGrid -->
-	<div class="block dark:hidden absolute -z-10 inset-0 pointer-events-none h-full">
+	<!-- <div class="block dark:hidden absolute -z-10 inset-0 pointer-events-none h-full">
 		<DotGrid baseColor="#EEE" activeColor="#FFFFFF" className="h-full w-full" dotSize={5} gap={15} returnDuration={1}/>
-	</div>
+	</div> -->
 
 	<!-- Dark mode DotGrid -->
-	<div class="hidden dark:block absolute -z-10 inset-0 pointer-events-none">
+	<!-- <div class="hidden dark:block absolute -z-10 inset-0 pointer-events-none">
 		<DotGrid baseColor="#111" activeColor="#FF00FF" className="h-full w-full" dotSize={5} gap={15} returnDuration={1}/>
-	</div>
+	</div> -->
 
 
 	<!-- FOOTER CONTENT -->

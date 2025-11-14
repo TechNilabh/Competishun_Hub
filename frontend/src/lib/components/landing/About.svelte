@@ -32,7 +32,7 @@
 
 </script>
 
-<section id="about" class="relative mx-auto mt-28 max-w-7xl px-6 text-center md:px-8 
+<section id="home-about" class="relative mx-auto mt-28 max-w-7xl px-6 text-center md:px-8 
   flex flex-col justify-center items-center
 ">
   <div class="text-2xl sm:text-3xl lg:text-4xl text-center animate-fade-in text-balance lg:text-right bg-gradient-to-br from-black from-30% to-black/40 bg-clip-text font-bold leading-none tracking-tighter text-transparent opacity-0 [--animation-delay:200ms] dark:from-white dark:to-white/40">{title}</div>

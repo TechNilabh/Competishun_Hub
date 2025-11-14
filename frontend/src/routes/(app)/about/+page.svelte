@@ -94,9 +94,22 @@
   }
 
   onMount(() => {
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
+    if (typeof window === "undefined") return;
+
+    const onScroll = () => {
+      scrollY = window.scrollY;
+      requestFrame();
+    };
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    onScroll();
+
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+    };
   });
+
 
   onDestroy(() => {
     window.removeEventListener("scroll", handleScroll);
@@ -114,6 +127,7 @@
   bind:this={rootEl}
   class="relative mx-auto max-w-6xl px-6 md:px-10 pt-36 pb-36"
   on:mousemove={handleMouse}
+  role="presentation"
 >
 
   <!-- Parallax Outline Shapes -->
