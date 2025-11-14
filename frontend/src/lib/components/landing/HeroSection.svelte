@@ -5,7 +5,7 @@
 
 	let text1: string = 'National Talent';
 	let text2: string = 'Hackathon';
-	let text3: string = 'A national stage for college students to innovate, collaborate, and showcase their technical excellence in solving real-world challenges.'
+	let text3: string = 'Build Innovations'
 	
 	let heroEl: HTMLImageElement;
 	let x = 0;
@@ -35,7 +35,7 @@
 
 </script>
 
-<section id="hero" class="relative mx-auto mt-32 max-w-7xl px-6 text-center md:px-8">
+<section id="hero" class="relative mx-auto mt-32 max-w-7xl px-6 text-center md:px-8 z-[50]">
 	<div class="container flex flex-col lg:flex-row lg:space-x-8">
     <div class="relative flex flex-col justify-center left-container order-1 w-auto lg:w-[60%]">
       <h1
@@ -44,14 +44,14 @@
         {text1}<br class="hidden md:block" /> {text2}
       </h1>
       <p
-        class="lg:mb-12 -translate-y-4 animate-fade-in text-balance lg:text-right tracking-tight dark:text-gray-400 text-gray-700 opacity-0 [--animation-delay:400ms] text-md md:text-xl"
+        class="lg:mb-12 -translate-y-4 animate-fade-in text-balance lg:text-right tracking-tight dark:text-gray-400 text-gray-700 opacity-0 [--animation-delay:400ms] text-lg md:text-2xl"
       >
         {text3}
       </p>
     </div>
 
     <div 
-	class="relative right-container flex justify-center items-center order-2 mt-8 lg:mt-0 w-full lg:w-[40%]"
+	class="relative right-container flex justify-center items-center order-2 mt-8 lg:mt-0 w-full lg:w-[40%] pointer-events-auto"
 	on:mousemove={handleMove}
 	on:mouseleave={reset}
 	role="presentation"
@@ -69,7 +69,7 @@
 	
 	<Button
 		class="-translate-y-4 animate-fade-in gap-1 rounded-lg text-white opacity-0 ease-in-out [--animation-delay:600ms] "
-		href='/dashboard'
+		href='/round'
 	>
 		<span>Dashboard </span>
 		<ArrowUpRight
