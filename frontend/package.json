@@ -37,6 +37,8 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@mediapipe/camera_utils": "^0.3.1675466862",
+		"@mediapipe/face_detection": "^0.4.1646425229",
 		"@supabase/supabase-js": "^2.49.8",
 		"@vercel/analytics": "^1.5.0",
 		"bits-ui": "^0.21.13",
@@ -58,6 +60,6 @@
 		"zod": "^3.23.8"
 	},
 	"engines": {
-		"node": "20.x"
+		"node": ">=20"
 	}
 }

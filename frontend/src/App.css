@@ -110,3 +110,6 @@
     @apply bg-background text-foreground;
   }
 }
+.page-wrapper {
+  padding-top: 4rem; 
+}

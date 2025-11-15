@@ -1,102 +1,221 @@
 <script lang="ts">
-	import GitHubSvg from '$lib/imgs/github-dark.svg';
-	import Button from '$lib/components/ui/button/button.svelte';
-	import { ChevronLeftIcon } from 'lucide-svelte';
+  import { goto } from '$app/navigation';
+  import { authStore } from '$lib/stores/auth';
+  import { toast } from 'svelte-sonner';
+  import { ChevronLeft, Loader, Mail, Lock, User } from 'lucide-svelte';
 
-	import * as Form from '$lib/components/ui/form';
-	import { Input } from '$lib/components/ui/input';
-	import { formSchema, type FormSchema } from '$lib/schema/schema';
-	import { type SuperValidated, type Infer, superForm } from 'sveltekit-superforms';
-	import { zodClient } from 'sveltekit-superforms/adapters';
-	import { Loader } from 'lucide-svelte';
-	import { toast } from 'svelte-sonner';
+  let name = '';
+  let email = '';
+  let password = '';
+  let confirmPassword = '';
+  let loading = false;
+  let showPassword = false;
+  let agreeToTerms = false;
 
-	export let data;
-	let dataForm: SuperValidated<Infer<FormSchema>> = data.form;
-	let form = superForm(dataForm, {
-		validators: zodClient(formSchema),
-		onSubmit: () => {
-			isFormLoading = true;
-		},
-		onUpdate: ({ result }) => {
-			isFormLoading = false;
-			if (result.status === 200) {
-				toast.success('Check your email', {
-					description: 'We have sent you a login link. Be sure to check your spam too.'
-				});
-			} else {
-				toast.error('Something went wrong', {
-					description: 'Your sign in request failed. Please try again.'
-				});
-			}
-		},
-	});
+  async function handleSubmit() {
+    if (!name || !email || !password || !confirmPassword) {
+      toast.error('Please fill in all fields');
+      return;
+    }
 
-	const { form: formData, enhance } = form;
+    if (password !== confirmPassword) {
+      toast.error('Passwords do not match');
+      return;
+    }
 
-	let loading = false;
-	let isFormLoading = false;
-	let githubSignIn = async () => {
-		loading = true;
-		await new Promise((resolve) => setTimeout(resolve, 1000));
-		loading = false;
-	};
+    if (password.length < 8) {
+      toast.error('Password must be at least 8 characters');
+      return;
+    }
+
+    if (!agreeToTerms) {
+      toast.error('Please agree to terms and conditions');
+      return;
+    }
+
+    loading = true;
+
+    try {
+      await authStore.signup(email, password, name);
+      toast.success('Account created successfully!');
+      goto('/team/create');
+    } catch (error: any) {
+      toast.error(error.message || 'Signup failed');
+    } finally {
+      loading = false;
+    }
+  }
 </script>
 
 <svelte:head>
-	<title>Sign Up | Svee UI</title>
-	<meta name="description" content="Sign Up for Svee UI" />
+  <title>Sign Up - Exam Platform</title>
 </svelte:head>
 
-<div class="container flex h-screen w-screen flex-col items-center justify-center">
-	<Button variant="ghost" href="/" class="absolute left-4 top-4 md:left-8 md:top-8">
-		<ChevronLeftIcon class="mr-2 size-4" />
-		Back
-	</Button>
-	<div class="mx-auto flex w-full flex-col justify-center gap-6 sm:w-[350px]">
-		<div class="flex flex-col gap-2 text-center">
-			<!-- {/* <Icons.logo class="mx-auto h-6 w-6" /> */} -->
-			<h1 class="text-2xl font-semibold tracking-tight">Welcome to Svee UI</h1>
-			<p class="text-sm text-muted-foreground">Sign up for an account</p>
-		</div>
-		<!-- Form -->
-		<form method="POST" use:enhance>
-			<Form.Field {form} name="email" class="mb-4">
-				<Form.Control let:attrs>
-					<Input placeholder="name@example.com" {...attrs} bind:value={$formData.email} />
-				</Form.Control>
-				<!-- <Form.Description>This is your email address.</Form.Description> -->
-				<Form.FieldErrors />
-			</Form.Field>
-			<Form.Button size="sm" class="w-full" disabled={isFormLoading}>
-				{#if isFormLoading}
-					<Loader class="mr-2 size-4 animate-spin" />
-				{/if}
-				Sign Up with Email</Form.Button
-			>
-		</form>
-		<!-- Separator -->
-		<div class="relative">
-			<div class="absolute inset-0 flex items-center">
-				<span class="w-full border-t" />
-			</div>
-			<div class="relative flex justify-center text-xs uppercase">
-				<span class="bg-background px-2 text-muted-foreground"> Or continue with </span>
-			</div>
-		</div>
-		<Button on:click={githubSignIn} variant="outline" disabled={loading}>
-			{#if loading}
-				<Loader class="mr-2 size-4 animate-spin" />
-			{:else}
-				<img src={GitHubSvg} alt="github" class="mr-2 size-4" />
-			{/if}
-			Github</Button
-		>
+<div class="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-pink-900 flex items-center justify-center p-4">
+  <button
+    on:click={() => goto('/')}
+    class="absolute top-4 left-4 flex items-center gap-2 text-white/80 hover:text-white transition-colors"
+  >
+    <ChevronLeft size={20} />
+    <span>Back</span>
+  </button>
 
-		<p class="px-8 text-center text-sm text-muted-foreground">
-			<a href="/signin" class="hover:text-brand underline underline-offset-4">
-				Already have an account? Sign In
-			</a>
-		</p>
-	</div>
+  <div class="w-full max-w-md">
+    <div class="bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/20 p-8">
+      <!-- Header -->
+      <div class="text-center mb-8">
+        <div class="inline-block p-3 bg-purple-500/20 rounded-full mb-4">
+          <svg class="w-12 h-12 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+          </svg>
+        </div>
+        <h1 class="text-3xl font-bold text-white mb-2">Create Account</h1>
+        <p class="text-gray-300">Join us and start your journey</p>
+      </div>
+
+      <form on:submit|preventDefault={handleSubmit} class="space-y-5">
+        <!-- Name -->
+        <div>
+          <label for="name" class="block text-sm font-medium text-gray-200 mb-2">
+            Full Name
+          </label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <User size={20} class="text-gray-400" />
+            </div>
+            <input
+              id="name"
+              type="text"
+              bind:value={name}
+              placeholder="John Doe"
+              class="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400
+                focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+              required
+            />
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-200 mb-2">
+            Email Address
+          </label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <Mail size={20} class="text-gray-400" />
+            </div>
+            <input
+              id="email"
+              type="email"
+              bind:value={email}
+              placeholder="you@example.com"
+              class="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400
+                focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+              required
+            />
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div>
+          <label for="password" class="block text-sm font-medium text-gray-200 mb-2">
+            Password
+          </label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <Lock size={20} class="text-gray-400" />
+            </div>
+
+            {#if showPassword}
+              <input
+                id="password"
+                type="text"
+                bind:value={password}
+                placeholder="••••••••"
+                class="w-full pl-10 pr-12 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400
+                  focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                required
+              />
+            {:else}
+              <input
+                id="password"
+                type="password"
+                bind:value={password}
+                placeholder="••••••••"
+                class="w-full pl-10 pr-12 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400
+                  focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                required
+              />
+            {/if}
+
+            <button
+              type="button"
+              on:click={() => showPassword = !showPassword}
+              class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400 hover:text-white"
+            >
+              {showPassword ? '👁️' : '👁️‍🗨️'}
+            </button>
+          </div>
+        </div>
+
+        <!-- Confirm Password -->
+        <div>
+          <label for="confirmPassword" class="block text-sm font-medium text-gray-200 mb-2">
+            Confirm Password
+          </label>
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <Lock size={20} class="text-gray-400" />
+            </div>
+            <input
+              id="confirmPassword"
+              type="password"
+              bind:value={confirmPassword}
+              placeholder="••••••••"
+              class="w-full pl-10 pr-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400
+                focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+              required
+            />
+          </div>
+        </div>
+
+        <!-- Terms -->
+        <label class="flex items-start gap-2">
+          <input
+            type="checkbox"
+            bind:checked={agreeToTerms}
+            class="w-4 h-4 mt-1 rounded border-gray-300 text-purple-600 focus:ring-purple-500"
+          />
+          <span class="text-sm text-gray-300">
+            I agree to the <a href="/terms" class="text-purple-400 hover:text-purple-300">Terms of Service</a>
+            and <a href="/privacy" class="text-purple-400 hover:text-purple-300">Privacy Policy</a>
+          </span>
+        </label>
+
+        <!-- Submit -->
+        <button
+          type="submit"
+          disabled={loading}
+          class="w-full py-3 px-4 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-500 hover:to-pink-500
+            text-white font-semibold rounded-lg transition-all transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed
+            disabled:transform-none flex items-center justify-center gap-2"
+        >
+          {#if loading}
+            <Loader class="animate-spin" size={20} />
+            <span>Creating account...</span>
+          {:else}
+            <span>Create Account</span>
+          {/if}
+        </button>
+      </form>
+
+      <p class="mt-6 text-center text-sm text-gray-300">
+        Already have an account?
+        <a href="/signin" class="text-purple-400 hover:text-purple-300 font-semibold">
+          Sign in
+        </a>
+      </p>
+    </div>
+  </div>
 </div>
