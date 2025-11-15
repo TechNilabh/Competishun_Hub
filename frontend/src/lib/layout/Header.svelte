@@ -17,7 +17,7 @@
 	const menuItem = [
 		{ id: 'hero', label: 'Home', href: '/' },
 		{ id: 'about', label: 'About', href: '/about' },
-		{ id: 'round', label: 'Problems', href: '/round', locked: !isUnlocked },
+		{ id: 'round', label: 'Dashboard', href: '/round', locked: !isUnlocked },
 	];
 
 	let hamburgerMenuIsOpen = false;

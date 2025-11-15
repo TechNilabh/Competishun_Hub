@@ -6,6 +6,8 @@ SignGuid.txt
 .vercel
 /.svelte-kit
 /build
+sandbox-temp
+/sandbox-temp
 
 # OS
 .DS_Store
