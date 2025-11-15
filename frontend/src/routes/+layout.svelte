@@ -4,4 +4,6 @@
 </script>
 <ModeWatcher />
 
-<slot></slot>
+<div class="page-wrapper">
+  <slot />
+</div>
