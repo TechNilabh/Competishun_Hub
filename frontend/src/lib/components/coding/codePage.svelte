@@ -97,7 +97,7 @@ int main() {
 </script>
 
 
-<section class="max-w-7xl mx-auto mt-16 px-6 pb-28">
+<div class="max-w-7xl mx-auto px-6 pb-28">
 	<h1 class="text-3xl font-bold mb-10">Round 2 — Coding Challenge</h1>
 
 	<div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
@@ -222,4 +222,4 @@ int main() {
 		</div>
 
 	</div>
-</section>
+</div>

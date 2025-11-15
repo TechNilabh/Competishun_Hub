@@ -22,7 +22,7 @@
 
     editor.onDidChangeModelContent(() => {
       const value = editor.getValue();
-	  console.debug("[Editor] dispatch update:code", value.slice(0, 200));
+	//   console.debug("[Editor] dispatch update:code", value.slice(0, 200));
       dispatch("update:code", value);   
     });
   });
@@ -32,7 +32,7 @@
   }
 
   $: if (editor && code !== editor.getValue()) {
-	console.debug("[Editor] parent changed code — setting editor value");
+	// console.debug("[Editor] parent changed code — setting editor value");
     editor.setValue(code); 
   }
 </script>
