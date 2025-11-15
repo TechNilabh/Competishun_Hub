@@ -54,7 +54,7 @@
 				Your accuracy & mismatch score will be computed automatically.
 			</p>
 
-			<Button on:click={() => goto('/round/2/submission')}>Go to Submission Portal</Button>
+			<Button on:click={() => goto('/round/2/ml')}>Go to Submission Portal</Button>
 		</div>
 	</div>
 </section>

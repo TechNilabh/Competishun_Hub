@@ -43,7 +43,6 @@ export const POST: RequestHandler = async ({ request }) => {
             break;
     }
 
-    // Attach stdin redirection
     const finalCmd = `${runCmd} < "${inputFile}"`;
 
     return new Promise((resolve) => {
