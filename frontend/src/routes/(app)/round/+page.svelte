@@ -29,7 +29,7 @@
 	];
 </script>
 
-<section id="round" class="relative mx-auto mt-32 max-w-7xl px-6 md:px-8">
+<section id="round" class="relative mx-auto max-w-7xl px-6 md:px-8">
 	<div class="max-w-6xl mx-auto px-4 py-12 flex flex-col justify-center items-center">
 
 		<!-- Heading -->

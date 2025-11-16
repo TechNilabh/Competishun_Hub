@@ -1,219 +1,169 @@
 <script lang="ts">
-  import { onMount, onDestroy } from "svelte";
-  import hero from "$lib/imgs/cube8.svg";
-
-  // Content
-  const title = "National Talent Hackathon 2026";
-  const tagline =
-    "A multi-stage national coding initiative led by the Department of Computer Science & Engineering, NIT Silchar — designed to assess clarity of thought, engineering discipline, and real-world AI/ML problem-solving.";
-
-  const facts = [
-    { label: "Organizer", value: "Dept. of CSE, NIT Silchar" },
-    { label: "Team Size", value: "Up to 3 members" },
-    { label: "Registration", value: "Till 30 Dec 2025" },
-    { label: "Fee", value: "₹2000 / team" },
-    { label: "Finale Venue", value: "NIT Silchar Campus (Offline)" }
-  ];
-
-  const prizes = [
-    { place: "1st", amount: "₹50,000" },
-    { place: "2nd", amount: "₹40,000" },
-    { place: "3rd", amount: "₹30,000" }
-  ];
-
-  const certificates = [
-    "Participation Certificate",
-    "Appreciation Certificate (≥50% or Top 75%)",
-    "Outstanding Performance Certificate (Top 10%)"
-  ];
-
-  const rounds = [
-    {
-      title: "Round 1 — Screening",
-      when: "January 2026 (2nd week)",
-      mode: "Online",
-      details: "MCQs, aptitude evaluation, and foundational coding tasks."
-    },
-    {
-      title: "Round 2 — AI/ML Coding",
-      when: "February 2026 (1st week)",
-      mode: "Online",
-      details: "Coding challenges and focused AI/ML-driven problem statements."
-    },
-    {
-      title: "Round 3 — Grand Finale",
-      when: "February 2026 (last week)",
-      mode: "Offline",
-      details: "Real-time problem solving at NIT Silchar with curated test data."
-    }
-  ];
-
-  const rankings = [
-    { label: "NIRF Engineering 2024", value: "Rank 40" },
-    { label: "NIRF Overall 2024", value: "Rank 92" },
-    { label: "QS Asia 2025", value: "Rank 541" },
-    { label: "Green Metric 2022", value: "Rank 205" }
-  ];
-
-  const perks = [
-    "Free accommodation during finale",
-    "Campus & local exposure",
-    "Faculty interactions & Gala Dinner"
-  ];
-
-  // Parallax
-  let rootEl: HTMLElement;
-  let mouseX = 0, mouseY = 0, scrollY = 0, frame = 0;
-
-  function handleMouse(e: MouseEvent) {
-    const r = rootEl.getBoundingClientRect();
-    mouseX = (e.clientX - (r.left + r.width / 2)) / r.width;
-    mouseY = (e.clientY - (r.top + r.height / 2)) / r.height;
-    requestFrame();
-  }
-
-  function handleScroll() {
-    scrollY = window.scrollY;
-    requestFrame();
-  }
-
-  function requestFrame() {
-    if (!frame) frame = requestAnimationFrame(applyParallax);
-  }
-
-  function applyParallax() {
-    frame = 0;
-    const layers = rootEl.querySelectorAll("[data-depth]");
-    layers.forEach((el: Element) => {
-      const htmlEl = el as HTMLElement;
-      const d = parseFloat(htmlEl.dataset.depth || "0");
-      const tx = mouseX * d * 14;
-      const ty = mouseY * d * 14 + scrollY * d * 0.12;
-      htmlEl.style.transform = `translate3d(${tx}px, ${ty}px, 0)`;
-    });
-  }
-
-  onMount(() => {
-    if (typeof window === "undefined") return;
-
-    const onScroll = () => {
-      scrollY = window.scrollY;
-      requestFrame();
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-
-    onScroll();
-
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-    };
-  });
+	import Sparkles from "$lib/components/ui/Sparkles.svelte";
 
 
-  onDestroy(() => {
-    window.removeEventListener("scroll", handleScroll);
-    if (frame) cancelAnimationFrame(frame);
-  });
+  const config = {
+    title: "National Talent Hackathon 2026",
+    tagline:
+      "A multi-stage national coding initiative led by the Department of Computer Science & Engineering, NIT Silchar — designed to assess clarity of thought, engineering discipline, and real-world AI/ML problem-solving.",
+    registerLink: "/register",
+    facts: [
+      { label: "Organizer", value: "Dept. of CSE, NIT Silchar" },
+      { label: "Team Size", value: "Up to 3 members" },
+      { label: "Registration", value: "Till 30 Dec 2025" },
+      { label: "Fee", value: "₹2000 / team" },
+      { label: "Finale Venue", value: "NIT Silchar Campus (Offline)" }
+    ],
+    aboutInstitute:
+      "Established in 1967 and declared an Institute of National Importance under the NIT Act 2007, NIT Silchar is recognized nationwide for engineering rigor, research depth, and academic distinction.",
+    rankings: [
+      { label: "NIRF Engineering 2024", value: "Rank 40" },
+      { label: "NIRF Overall 2024", value: "Rank 92" },
+      { label: "QS Asia 2025", value: "Rank 541" },
+      { label: "Green Metric 2022", value: "Rank 205" }
+    ],
+    rounds: [
+      {
+        title: "Round 1 — Screening",
+        when: "January 2026 (2nd week)",
+        mode: "Online",
+        details: "MCQs, aptitude evaluation, and foundational coding tasks."
+      },
+      {
+        title: "Round 2 — AI/ML Coding",
+        when: "February 2026 (1st week)",
+        mode: "Online",
+        details: "Coding challenges and focused AI/ML-driven problem statements."
+      },
+      {
+        title: "Round 3 — Grand Finale",
+        when: "February 2026 (last week)",
+        mode: "Offline",
+        details: "Real-time problem solving at NIT Silchar with curated test data."
+      }
+    ],
+    prizes: [
+      { place: "1st", amount: "₹50,000" },
+      { place: "2nd", amount: "₹40,000" },
+      { place: "3rd", amount: "₹30,000" }
+    ],
+    certificates: [
+      "Participation Certificate",
+      "Appreciation Certificate (≥50% or Top 75%)",
+      "Outstanding Performance Certificate (Top 10%)"
+    ],
+    perks: [
+      "Free accommodation during finale",
+      "Campus & local exposure",
+      "Faculty interactions & Gala Dinner"
+    ],
+    footerNote:
+      "Account details and registration link will be provided by the organizers."
+  };
 
   function onRegister() {
-    window.location.href = "/register";
+    window.location.href = config.registerLink;
   }
 </script>
 
-
 <section
   id="about"
-  bind:this={rootEl}
-  class="relative mx-auto max-w-6xl px-6 md:px-10 pt-36 pb-36"
-  on:mousemove={handleMouse}
-  role="presentation"
+  class="relative mx-auto max-w-6xl px-6 md:px-10 pt-36 pb-36 text-black dark:text-white animate-fadeIn"
+  role="main"
+  aria-labelledby="hackathon-title"
 >
 
-  <!-- Parallax Outline Shapes -->
-  <img src={hero} alt="" aria-hidden="true"
-    class="hidden md:block absolute -top-32 -left-20 w-40 opacity-10 dark:opacity-15
-           contrast-0 invert-0 mix-blend-multiply dark:mix-blend-lighten"
-    data-depth="0.2" />
-
-  <img src={hero} alt="" aria-hidden="true"
-    class="hidden md:block absolute top-60 -right-16 w-32 opacity-10 dark:opacity-15
-           contrast-0 mix-blend-multiply dark:invert"
-    data-depth="0.45" />
-
-  <img src={hero} alt="" aria-hidden="true"
-    class="hidden md:block absolute bottom-10 left-1/2 -translate-x-1/2 w-28
-           opacity-5 dark:opacity-10 contrast-0"
-    data-depth="0.7" />
-
-
-  <!-- Title Section -->
-  <div class="max-w-4xl mx-auto text-center">
-
-    <h1 class="font-mono text-4xl md:text-6xl font-bold tracking-[-0.015em] leading-[1.08]">
-      {title}
+  <header class="relative mx-auto text-center" role="banner">
+    <h1 id="hackathon-title"
+      class="font-mono text-4xl md:text-6xl font-bold tracking-[-0.015em] text-indigo-500">
+      {config.title}
     </h1>
 
-    <p class="mt-6 font-sans text-[17px] md:text-[18px] leading-8 text-black/75 dark:text-white/75 max-w-3xl mx-auto">
-      {tagline}
+    <p class="mt-6 font-sans text-[17px] leading-8 text-black/75 dark:text-white/75 max-w-3xl mx-auto">
+      {config.tagline}
     </p>
 
     <button
       on:click={onRegister}
-      class="mt-10 font-mono tracking-tight text-sm px-6 py-3 border border-black/10 dark:border-white/20
-             hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
+      class="mt-10 font-mono text-sm px-6 py-3 border border-indigo-300 dark:border-indigo-500 rounded-lg hover:bg-indigo-500 hover:text-white transition-all duration-300 shadow-sm"
+      aria-label="Register for the hackathon"
+    >
       Register
     </button>
-  </div>
 
+    <div class="relative h-40 w-full mt-28">
+      <!-- Gradients -->
+      <div
+        class="absolute inset-x-20 top-0 h-[2px] w-3/4 bg-gradient-to-r from-transparent via-indigo-500 to-transparent blur-sm"
+      />
+      <div
+        class="absolute inset-x-20 top-0 h-px w-3/4 bg-gradient-to-r from-transparent via-indigo-500 to-transparent"
+      />
+      <div
+        class="absolute inset-x-60 top-0 h-[5px] w-1/4 bg-gradient-to-r from-transparent via-purple-500 to-transparent blur-sm"
+      />
+      <div
+        class="absolute inset-x-60 top-0 h-px w-1/4 bg-gradient-to-r from-transparent via-purple-500 to-transparent"
+      />
 
-  <!-- Facts -->
-  <div class="mt-32 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10">
-    {#each facts as f}
-      <div class="text-center">
+      <!-- Core component -->
+      <Sparkles
+        minSize={0.8}
+        maxSize={2}
+        particleDensity={300}
+        className="w-full h-full"
+        particleColor="#808080"
+      />
+
+      <!-- Radial Gradient to prevent sharp edges -->
+      <div
+        class="absolute inset-0 h-full w-full bg-white dark:bg-black [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]"
+      ></div>
+    </div>
+  </header>
+
+  <section class="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10" aria-label="Event facts">
+    
+    {#each config.facts as f}
+      <article class="text-center p-4 rounded-xl hover:bg-indigo-500/10 transition-all duration-300 cursor-default">
         <div class="font-mono text-xs tracking-[0.1em] text-black/60 dark:text-white/60 uppercase">
           {f.label}
         </div>
-        <div class="mt-3 font-sans text-lg tracking-tight">
+        <div class="mt-3 font-sans text-lg text-indigo-500 font-semibold">
           {f.value}
         </div>
-      </div>
+      </article>
     {/each}
-  </div>
+  </section>
 
-
-  <!-- NIT Silchar -->
-  <div class="mt-40 max-w-3xl mx-auto text-left">
-    <h2 class="font-mono text-2xl md:text-3xl font-semibold tracking-tight">
+  <section class="mt-40 max-w-3xl mx-auto" aria-label="About NIT Silchar">
+    <h2 class="font-mono text-2xl md:text-3xl font-semibold text-indigo-500">
       About NIT Silchar
     </h2>
 
     <p class="mt-6 font-sans text-[16px] leading-8 text-black/75 dark:text-white/75">
-      Established in 1967 and declared an Institute of National Importance under the NIT Act 2007,
-      NIT Silchar is recognized nationwide for engineering rigor, research depth, and academic distinction.
+      {config.aboutInstitute}
     </p>
 
-    <div class="mt-10 space-y-3">
-      {#each rankings as r}
-        <div class="font-mono text-sm flex justify-between border-b border-black/10 dark:border-white/10 pb-3">
+    <ul class="mt-10 space-y-3">
+      {#each config.rankings as r}
+        <li class="font-mono text-sm flex justify-between border-b border-indigo-200 dark:border-indigo-500/30 pb-3">
           <span>{r.label}</span>
-          <span>{r.value}</span>
-        </div>
+          <span class="text-indigo-500 font-semibold">{r.value}</span>
+        </li>
       {/each}
-    </div>
-  </div>
+    </ul>
+  </section>
 
-
-  <!-- Rounds -->
-  <div class="mt-40 max-w-3xl mx-auto">
-    <h2 class="font-mono text-2xl md:text-3xl font-semibold tracking-tight">
+  <section class="mt-40 max-w-3xl mx-auto" aria-label="Competition structure">
+    <h2 class="font-mono text-2xl md:text-3xl font-semibold text-indigo-500">
       Competition Structure
     </h2>
 
     <div class="mt-12 space-y-16">
-      {#each rounds as r}
-        <div>
-          <div class="font-mono text-base tracking-tight">{r.title}</div>
+      {#each config.rounds as r}
+        <article class="p-4 rounded-xl hover:bg-indigo-500/10 transition-all duration-300">
+          <div class="font-mono text-base text-indigo-500 font-semibold">{r.title}</div>
 
           <div class="mt-2 flex gap-6 text-sm text-black/60 dark:text-white/60 font-mono">
             <span>{r.mode}</span>
@@ -223,73 +173,62 @@
           <p class="mt-4 font-sans text-[16px] leading-7 text-black/70 dark:text-white/70">
             {r.details}
           </p>
-        </div>
+        </article>
       {/each}
     </div>
-  </div>
+  </section>
 
+  <section class="mt-40 grid md:grid-cols-2 gap-20 max-w-4xl mx-auto" aria-label="Prizes and certificates">
 
-  <!-- Prizes / Certificates -->
-  <div class="mt-40 grid md:grid-cols-2 gap-20 max-w-4xl mx-auto">
+    <article>
+      <h2 class="font-mono text-2xl md:text-3xl font-semibold text-indigo-500">Prizes</h2>
 
-    <div>
-      <h2 class="font-mono text-2xl md:text-3xl font-semibold tracking-tight">
-        Prizes
-      </h2>
-
-      <div class="mt-10 space-y-6">
-        {#each prizes as p}
-          <div class="font-mono text-base flex justify-between border-b border-black/10 dark:border-white/10 pb-4">
+      <ul class="mt-10 space-y-6">
+        {#each config.prizes as p}
+          <li class="font-mono text-base flex justify-between border-b border-indigo-200 dark:border-indigo-500/30 pb-4">
             <span>{p.place}</span>
-            <span>{p.amount}</span>
-          </div>
+            <span class="text-indigo-500 font-semibold">{p.amount}</span>
+          </li>
         {/each}
-      </div>
-    </div>
+      </ul>
+    </article>
 
-    <div>
-      <h2 class="font-mono text-2xl md:text-3xl font-semibold tracking-tight">
-        Certificates
-      </h2>
+    <article>
+      <h2 class="font-mono text-2xl md:text-3xl font-semibold text-indigo-500">Certificates</h2>
 
       <ul class="mt-10 space-y-5 font-sans text-[16px] leading-7">
-        {#each certificates as c}
-          <li class="font-mono text-sm pb-2 border-b border-black/10 dark:border-white/10">
+        {#each config.certificates as c}
+          <li class="font-mono text-sm pb-2 border-b border-indigo-200 dark:border-indigo-500/30">
             {c}
           </li>
         {/each}
       </ul>
-    </div>
+    </article>
 
-  </div>
+  </section>
 
-
-  <!-- Perks -->
-  <div class="mt-40 max-w-3xl mx-auto">
-    <h2 class="font-mono text-2xl md:text-3xl font-semibold tracking-tight">
+  <section class="mt-40 max-w-3xl mx-auto" aria-label="Participant perks">
+    <h2 class="font-mono text-2xl md:text-3xl font-semibold text-indigo-500">
       What participants receive
     </h2>
 
     <ul class="mt-10 space-y-5">
-      {#each perks as perk}
-        <li class="font-mono text-sm text-black/80 dark:text-white/80">
-          {perk}
-        </li>
+      {#each config.perks as perk}
+        <li class="font-mono text-sm text-black/80 dark:text-white/80">{perk}</li>
       {/each}
     </ul>
-  </div>
+  </section>
 
-
-  <!-- Footer Note -->
-  <div class="mt-40 text-center font-mono text-xs text-black/50 dark:text-white/50">
-    Account details and registration link will be provided by the organizers.
-  </div>
 
 </section>
 
 <style>
-  [data-depth] {
-    will-change: transform;
-    transition: transform 120ms ease-out;
+  .animate-fadeIn {
+    animation: fadeIn 0.6s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 </style>

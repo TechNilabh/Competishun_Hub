@@ -1,5 +1,6 @@
 import { fontFamily } from 'tailwindcss/defaultTheme';
 import type { Config } from 'tailwindcss';
+import animate from "tailwindcss-animate";
 
 const config: Config = {
 	darkMode: ['class'],
@@ -66,6 +67,7 @@ const config: Config = {
 				sans: ['Inter var', ...fontFamily.sans]
 			},
 			animation: {
+				ripple:'ripple var(--duration,2s) ease calc(var(--i, 0)*.2s) infinite',
 				'accordion-down': 'accordion-down 0.2s ease-out',
 				'accordion-up': 'accordion-up 0.2s ease-out',
 				'border-beam': 'border-beam calc(var(--duration)*1s) infinite linear',
@@ -77,6 +79,14 @@ const config: Config = {
 				'marquee-vertical': 'marquee-vertical var(--duration) linear infinite'
 			},
 			keyframes: {
+				ripple: {
+					"0%, 100%": {
+						transform: "translate(-50%, -50%) scale(1)",
+					},
+					"50%": {
+						transform: "translate(-50%, -50%) scale(0.9)",
+					},
+				},
 				'accordion-down': {
 					from: { height: '0' },
 					to: { height: 'var(--radix-accordion-content-height)' }
@@ -130,7 +140,7 @@ const config: Config = {
 			}
 		}
 	},
-	plugins:[require('tailwindcss-animate')]
+	plugins:[animate]
 };
 
 export default config;

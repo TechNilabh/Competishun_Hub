@@ -5,7 +5,7 @@
 	import { Button } from '$lib/components/ui/button';
 </script>
 
-<section class="relative mx-auto max-w-6xl px-6 md:px-10 pt-36 pb-36">
+<section class="relative mx-auto max-w-6xl px-6 md:px-10 mt-10 pb-36">
 	<!-- Heading -->
 	<h1
 		in:fade={{ duration: 300 }}
