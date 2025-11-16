@@ -1,8 +1,7 @@
 <script lang="ts">
 	import Sparkles from "$lib/components/ui/Sparkles.svelte";
 
-
-  const config = {
+	const config = {
     title: "National Talent Hackathon 2026",
     tagline:
       "A multi-stage national coding initiative led by the Department of Computer Science & Engineering, NIT Silchar — designed to assess clarity of thought, engineering discipline, and real-world AI/ML problem-solving.",
@@ -61,174 +60,180 @@
       "Account details and registration link will be provided by the organizers."
   };
 
-  function onRegister() {
-    window.location.href = config.registerLink;
-  }
+	function onRegister() {
+		window.location.href = config.registerLink;
+	}
 </script>
 
 <section
-  id="about"
-  class="relative mx-auto max-w-6xl px-6 md:px-10 pt-36 pb-36 text-black dark:text-white animate-fadeIn"
-  role="main"
-  aria-labelledby="hackathon-title"
+	id="about"
+	class="relative mx-auto max-w-6xl px-6 md:px-10 pt-36 pb-40 text-[var(--text-primary)] animate-fadeIn"
+	role="main"
 >
 
-  <header class="relative mx-auto text-center" role="banner">
-    <h1 id="hackathon-title"
-      class="font-mono text-4xl md:text-6xl font-bold tracking-[-0.015em] text-indigo-500">
-      {config.title}
-    </h1>
+	<header class="relative mx-auto text-center">
 
-    <p class="mt-6 font-sans text-[17px] leading-8 text-black/75 dark:text-white/75 max-w-3xl mx-auto">
-      {config.tagline}
-    </p>
+		<h1
+			id="hackathon-title"
+			class="font-mono text-4xl md:text-6xl font-bold tracking-tight text-indigo-500 drop-shadow-sm"
+		>
+			{config.title}
+		</h1>
 
-    <button
-      on:click={onRegister}
-      class="mt-10 font-mono text-sm px-6 py-3 border border-indigo-300 dark:border-indigo-500 rounded-lg hover:bg-indigo-500 hover:text-white transition-all duration-300 shadow-sm"
-      aria-label="Register for the hackathon"
-    >
-      Register
-    </button>
+		<p class="mt-6 text-lg md:text-xl text-[var(--text-secondary)] max-w-3xl mx-auto leading-8">
+			{config.tagline}
+		</p>
 
-    <div class="relative h-40 w-full mt-28">
-      <!-- Gradients -->
-      <div
-        class="absolute inset-x-20 top-0 h-[2px] w-3/4 bg-gradient-to-r from-transparent via-indigo-500 to-transparent blur-sm"
-      />
-      <div
-        class="absolute inset-x-20 top-0 h-px w-3/4 bg-gradient-to-r from-transparent via-indigo-500 to-transparent"
-      />
-      <div
-        class="absolute inset-x-60 top-0 h-[5px] w-1/4 bg-gradient-to-r from-transparent via-purple-500 to-transparent blur-sm"
-      />
-      <div
-        class="absolute inset-x-60 top-0 h-px w-1/4 bg-gradient-to-r from-transparent via-purple-500 to-transparent"
-      />
+		<button
+			on:click={onRegister}
+			class="mt-10 font-mono text-sm px-7 py-3 border border-indigo-400
+			       rounded-lg hover:bg-indigo-500 hover:text-white transition-all duration-300
+			       shadow-sm hover:shadow-indigo-500/20"
+		>
+			Register Now
+		</button>
 
-      <!-- Core component -->
-      <Sparkles
-        minSize={0.8}
-        maxSize={2}
-        particleDensity={300}
-        className="w-full h-full"
-        particleColor="#808080"
-      />
+		<!-- Sparkles Decoration -->
+		<div class="relative h-40 w-full mt-24 pointer-events-none select-none">
+			<div class="absolute inset-x-20 top-0 h-[2px] w-3/4 bg-indigo-500/40 blur-sm" />
+			<div class="absolute inset-x-20 top-0 h-px w-3/4 bg-indigo-500/40" />
+			<Sparkles
+				minSize={0.8}
+				maxSize={2}
+				particleDensity={250}
+				className="w-full h-full"
+				particleColor="#9ca3af"
+			/>
+			<div
+				class="absolute inset-0 bg-white dark:bg-black 
+				       [mask-image:radial-gradient(350px_200px_at_top,transparent_25%,white)]"
+			></div>
+		</div>
+	</header>
 
-      <!-- Radial Gradient to prevent sharp edges -->
-      <div
-        class="absolute inset-0 h-full w-full bg-white dark:bg-black [mask-image:radial-gradient(350px_200px_at_top,transparent_20%,white)]"
-      ></div>
-    </div>
-  </header>
+	<!-- Quick Facts Grid              -->
+	<section class="mt-20 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8" aria-label="Event facts">
 
-  <section class="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10" aria-label="Event facts">
-    
-    {#each config.facts as f}
-      <article class="text-center p-4 rounded-xl hover:bg-indigo-500/10 transition-all duration-300 cursor-default">
-        <div class="font-mono text-xs tracking-[0.1em] text-black/60 dark:text-white/60 uppercase">
-          {f.label}
-        </div>
-        <div class="mt-3 font-sans text-lg text-indigo-500 font-semibold">
-          {f.value}
-        </div>
-      </article>
-    {/each}
-  </section>
+		{#each config.facts as f}
+			<div
+				class="p-5 rounded-xl text-center border border-[var(--border)]
+				       bg-[var(--card-bg)] shadow-lg shadow-black/10
+				       hover:border-indigo-500 hover:shadow-indigo-500/20 transition-all cursor-default"
+			>
+				<p class="font-mono text-sm uppercase tracking-wide text-[var(--text-secondary)]">
+					{f.label}
+				</p>
+				<p class="mt-3 text-xl text-indigo-500 font-bold">{f.value}</p>
+			</div>
+		{/each}
 
-  <section class="mt-40 max-w-3xl mx-auto" aria-label="About NIT Silchar">
-    <h2 class="font-mono text-2xl md:text-3xl font-semibold text-indigo-500">
-      About NIT Silchar
-    </h2>
+	</section>
 
-    <p class="mt-6 font-sans text-[16px] leading-8 text-black/75 dark:text-white/75">
-      {config.aboutInstitute}
-    </p>
+	<!-- About NIT Silchar             -->
+	<section class="mt-32 max-w-3xl mx-auto">
+		<h2 class="font-mono text-2xl md:text-3xl font-semibold text-indigo-500 mb-6">
+			About NIT Silchar
+		</h2>
 
-    <ul class="mt-10 space-y-3">
-      {#each config.rankings as r}
-        <li class="font-mono text-sm flex justify-between border-b border-indigo-200 dark:border-indigo-500/30 pb-3">
-          <span>{r.label}</span>
-          <span class="text-indigo-500 font-semibold">{r.value}</span>
-        </li>
-      {/each}
-    </ul>
-  </section>
+		<p class="text-[17px] leading-8 text-[var(--text-secondary)]">
+			{config.aboutInstitute}
+		</p>
 
-  <section class="mt-40 max-w-3xl mx-auto" aria-label="Competition structure">
-    <h2 class="font-mono text-2xl md:text-3xl font-semibold text-indigo-500">
-      Competition Structure
-    </h2>
+		<ul class="mt-10 space-y-4">
+			{#each config.rankings as r}
+				<li
+					class="flex justify-between text-[var(--text-primary)] font-mono text-sm
+					       border-b border-[var(--border)] pb-3"
+				>
+					<span>{r.label}</span>
+					<span class="text-indigo-500 font-semibold">{r.value}</span>
+				</li>
+			{/each}
+		</ul>
+	</section>
 
-    <div class="mt-12 space-y-16">
-      {#each config.rounds as r}
-        <article class="p-4 rounded-xl hover:bg-indigo-500/10 transition-all duration-300">
-          <div class="font-mono text-base text-indigo-500 font-semibold">{r.title}</div>
+	<!-- Competition Structure          -->
+	<section class="mt-32 max-w-3xl mx-auto">
+		<h2 class="font-mono text-2xl md:text-3xl font-semibold text-indigo-500">
+			Competition Structure
+		</h2>
 
-          <div class="mt-2 flex gap-6 text-sm text-black/60 dark:text-white/60 font-mono">
-            <span>{r.mode}</span>
-            <span>{r.when}</span>
-          </div>
+		<div class="mt-12 space-y-12">
 
-          <p class="mt-4 font-sans text-[16px] leading-7 text-black/70 dark:text-white/70">
-            {r.details}
-          </p>
-        </article>
-      {/each}
-    </div>
-  </section>
+			{#each config.rounds as r}
+				<div
+					class="p-6 rounded-xl bg-[var(--card-bg)] border border-[var(--border)]
+					       shadow-lg shadow-black/10 hover:shadow-indigo-500/20
+					       hover:border-indigo-500 transition-all"
+				>
+					<p class="font-mono text-base text-indigo-500 font-semibold">{r.title}</p>
 
-  <section class="mt-40 grid md:grid-cols-2 gap-20 max-w-4xl mx-auto" aria-label="Prizes and certificates">
+					<p class="mt-3 flex gap-6 text-sm text-[var(--text-secondary)] font-mono opacity-80">
+						<span>{r.mode}</span>
+						<span>{r.when}</span>
+					</p>
 
-    <article>
-      <h2 class="font-mono text-2xl md:text-3xl font-semibold text-indigo-500">Prizes</h2>
+					<p class="mt-4 text-[16px] leading-7 text-[var(--text-primary)] opacity-90">
+						{r.details}
+					</p>
+				</div>
+			{/each}
 
-      <ul class="mt-10 space-y-6">
-        {#each config.prizes as p}
-          <li class="font-mono text-base flex justify-between border-b border-indigo-200 dark:border-indigo-500/30 pb-4">
-            <span>{p.place}</span>
-            <span class="text-indigo-500 font-semibold">{p.amount}</span>
-          </li>
-        {/each}
-      </ul>
-    </article>
+		</div>
+	</section>
 
-    <article>
-      <h2 class="font-mono text-2xl md:text-3xl font-semibold text-indigo-500">Certificates</h2>
+	<!-- Prizes + Certificates          -->
+	<section class="mt-32 grid md:grid-cols-2 gap-16 max-w-4xl mx-auto">
 
-      <ul class="mt-10 space-y-5 font-sans text-[16px] leading-7">
-        {#each config.certificates as c}
-          <li class="font-mono text-sm pb-2 border-b border-indigo-200 dark:border-indigo-500/30">
-            {c}
-          </li>
-        {/each}
-      </ul>
-    </article>
+		<!-- Prizes -->
+		<div>
+			<h2 class="font-mono text-2xl md:text-3xl font-semibold text-indigo-500">Prizes</h2>
 
-  </section>
+			<ul class="mt-10 space-y-6">
+				{#each config.prizes as p}
+					<li class="flex justify-between font-mono text-base border-b border-[var(--border)] pb-3">
+						<span>{p.place}</span>
+						<span class="text-indigo-500 font-semibold">{p.amount}</span>
+					</li>
+				{/each}
+			</ul>
+		</div>
 
-  <section class="mt-40 max-w-3xl mx-auto" aria-label="Participant perks">
-    <h2 class="font-mono text-2xl md:text-3xl font-semibold text-indigo-500">
-      What participants receive
-    </h2>
+		<!-- Certificates -->
+		<div>
+			<h2 class="font-mono text-2xl md:text-3xl font-semibold text-indigo-500">Certificates</h2>
 
-    <ul class="mt-10 space-y-5">
-      {#each config.perks as perk}
-        <li class="font-mono text-sm text-black/80 dark:text-white/80">{perk}</li>
-      {/each}
-    </ul>
-  </section>
+			<ul class="mt-10 space-y-5 font-mono text-sm">
+				{#each config.certificates as c}
+					<li class="border-b border-[var(--border)] pb-2">{c}</li>
+				{/each}
+			</ul>
+		</div>
 
+	</section>
+
+	<!-- Perks                         -->
+	<section class="mt-32 max-w-3xl mx-auto">
+		<h2 class="font-mono text-2xl md:text-3xl font-semibold text-indigo-500">
+			What Participants Receive
+		</h2>
+
+		<ul class="mt-10 space-y-5 font-mono text-sm text-[var(--text-secondary)]">
+			{#each config.perks as perk}
+				<li>{perk}</li>
+			{/each}
+		</ul>
+	</section>
 
 </section>
 
 <style>
-  .animate-fadeIn {
-    animation: fadeIn 0.6s ease-out;
-  }
+	.animate-fadeIn {
+		animation: fadeIn 0.5s ease-out;
+	}
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+	@keyframes fadeIn {
+		from { opacity: 0; transform: translateY(20px); }
+		to { opacity: 1; transform: translateY(0); }
+	}
 </style>

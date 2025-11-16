@@ -3,7 +3,7 @@
   import prize_certificates from '$lib/imgs/prism.svg';
   import prize_goodies from '$lib/imgs/cyl.svg';
 
-  let title = "Prizes";
+  const title = "Prizes";
 
   const prizeList = [
     {
@@ -24,32 +24,53 @@
   ];
 </script>
 
-<section id="prizes" class="relative mx-auto mt-32 max-w-7xl px-6 md:px-8 text-center flex flex-col items-center">
-  
+<section 
+  id="prizes"
+  class="relative mx-auto mt-32 max-w-7xl px-6 md:px-8 text-center flex flex-col items-center animate-fadeIn"
+>
+
   <!-- Title -->
-  <div class="-translate-y-4 text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-br from-black from-30% to-black/40 dark:from-white dark:to-white/40 bg-clip-text text-transparent tracking-tight animate-fade-in opacity-0 [--animation-delay:200ms]">
+  <h2 class="text-2xl sm:text-3xl lg:text-4xl text-center animate-fade-in text-balance lg:text-right bg-gradient-to-br from-black from-30% to-black/40 bg-clip-text font-bold leading-none tracking-tighter text-transparent opacity-0 [--animation-delay:200ms] dark:from-white dark:to-white/40">
     {title}
-  </div>
+  </h2>
 
-  <!-- Grid -->
-  <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+  <!-- Prize Grid -->
+  <div class="mt-14 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 w-full">
 
-    {#each prizeList as prize}
-      <div 
-        class="p-4 rounded-2xl backdrop-blur-xl border border-black/10 dark:border-white/10 shadow-xl transition-transform duration-300 ease-out cursor-pointer"
-        
+    {#each prizeList as prize, i}
+      <div
+        class="p-8 rounded-2xl border border-[var(--border)]
+               bg-[var(--card-bg)] shadow-lg shadow-black/20
+               hover:border-indigo-500 hover:shadow-indigo-500/20
+               hover:-translate-y-2 hover:scale-[1.02]
+               transition-all duration-300 ease-out cursor-pointer select-none"
       >
-        <img 
-        src={prize.image} alt={prize.name} class="w-28 h-28 mx-auto mb-4 transition duration-200" />
+        <img
+          src={prize.image}
+          alt={prize.name}
+          class="w-24 h-24 mx-auto mb-5 transition-transform duration-300 group-hover:scale-110"
+        />
 
-        <div class="text-xl font-semibold mb-2">{prize.name}</div>
+        <h3 class="text-xl font-bold text-[var(--text-primary)] mb-3">
+          {prize.name}
+        </h3>
 
-        <div class="text-sm text-gray-700 dark:text-gray-300 px-2">
+        <p class="text-sm text-[var(--text-secondary)] max-w-xs mx-auto leading-relaxed">
           {prize.desc}
-        </div>
+        </p>
       </div>
     {/each}
 
   </div>
 
 </section>
+
+<style>
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .animate-fadeIn {
+    animation: fadeIn 0.4s ease-out;
+  }
+</style>
