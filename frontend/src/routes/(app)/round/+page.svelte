@@ -18,7 +18,7 @@
 			id: 1,
 			title: 'Round 1 — Quiz',
 			description: 'A timed MCQ-based quiz testing core CS + logical thinking.',
-			path: '/round/1'
+			path: '/round/exams'
 		},
 		{
 			id: 2,
@@ -41,9 +41,6 @@
 			Problem statement
 		</h1>
 
-		<!-- ======================= -->
-		<!-- 🎯 TIMELINE OF ROUNDS -->
-		<!-- ======================= -->
 		<div class="w-full max-w-3xl mb-12">
 			<h2 class="text-xl font-semibold mb-6">Competition Rounds</h2>
 
