@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Pure light mode */
+    --background: 0 0% 100%;     /* WHITE */
+    --foreground: 0 0% 0%;       /* BLACK */
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 0%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 0%;
+
+    /* Neon purple accent */
+    --primary: 257 90% 55%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 95%;        /* neutral light gray */
+    --secondary-foreground: 0 0% 10%;
+
+    --muted: 0 0% 93%;
+    --muted-foreground: 0 0% 40%;
+
+    --accent: 257 90% 55%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 85% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 85%;
+    --input: 0 0% 85%;
+    --ring: 257 90% 55%;
+
+    --radius: 0.5rem;
+
+    /* Optional decorative colors (kept intact since they’re not UI surfaces) */
+    --color-one: #ffffff;
+    --color-two: #8B5CF6;
+    --color-three: #000000;
+
+    --prose-text: #1a1a1a;
+    --heading-text: #000000;
+    --lead-text: #444444;
+    --border-color: #e5e5e5;
+
+    /* Accent gradient palette */
+    --color-1: 265 90% 72%;
+    --color-2: 245 85% 68%;
+    --color-3: 225 85% 66%;
+    --color-4: 205 90% 67%;
+    --color-5: 190 85% 70%;
+  }
+
+  /* Dark mode — PURE black & PURE white */
+  .dark {
+    --background: 0 0% 0%;       /* BLACK */
+    --foreground: 0 0% 100%;     /* WHITE */
+
+    --card: 0 0% 7%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 0 0% 7%;
+    --popover-foreground: 0 0% 100%;
+
+    /* Brighter neon purple for dark mode */
+    --primary: 257 92% 64%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 0 0% 12%;
+    --muted-foreground: 0 0% 70%;
+
+    --accent: 257 92% 64%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 72% 45%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 257 92% 64%;
+
+    --color-one: #ffffff;
+    --color-two: #A78BFA;
+    --color-three: #000000; /* deep pure black */
+
+    --prose-text: #e5e5e5;
+    --heading-text: #ffffff;
+    --lead-text: #bbbbbb;
+    --border-color: #222222;
+
+    --color-1: 265 90% 72%;
+    --color-2: 245 85% 68%;
+    --color-3: 225 85% 66%;
+    --color-4: 205 90% 67%;
+    --color-5: 190 85% 70%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+.page-wrapper {
+  padding-top: 4rem; 
+}
