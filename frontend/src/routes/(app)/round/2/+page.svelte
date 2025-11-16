@@ -1,60 +1,82 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { fade, slide } from 'svelte/transition';
-    import { Lightbulb, FileWarning } from 'lucide-svelte';
+	import { Code, FileSpreadsheet } from 'lucide-svelte';
 	import { Button } from '$lib/components/ui/button';
+
+	const parts = [
+		{
+			id: 1,
+			title: "Part 1 — Code Execution Task",
+			desc: "Write and execute your solution for the given coding problem. Your code will run against public and hidden test cases to evaluate correctness.",
+			icon: Code,
+			path: "/round/2/code"
+		},
+		{
+			id: 2,
+			title: "Part 2 — ML Submission",
+			desc: "Download the dataset, train a model, generate submission.csv, and upload it along with your notebook. You will receive an automated accuracy and mismatch score.",
+			icon: FileSpreadsheet,
+			path: "/round/2/ml"
+		}
+	];
 </script>
 
-<section class="relative mx-auto max-w-6xl px-6 md:px-10 mt-10 pb-36">
-	<!-- Heading -->
+<section class="relative flex flex-col justify-center items-center mx-auto max-w-6xl px-6 md:px-10 mt-16 pb-40 animate-fadeIn">
+
 	<h1
 		in:fade={{ duration: 300 }}
-		class="text-3xl sm:text-4xl lg:text-5xl font-bold text-center 
-    bg-gradient-to-br from-black to-black/40 dark:from-white dark:to-white/40 
-    bg-clip-text text-transparent mb-6"
+		class="text-4xl sm:text-5xl font-extrabold text-center mb-6 tracking-tight 
+		       text-[var(--text-primary)] relative inline-block"
 	>
 		Round 2 — Coding Challenge
+		<span class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-28 h-[3px] bg-indigo-500 rounded-full"></span>
 	</h1>
 
 	<p
 		in:fade={{ duration: 400 }}
-		class="text-center max-w-2xl mx-auto text-lg opacity-80 mb-12"
+		class="text-center max-w-3xl mx-auto text-lg text-[var(--text-secondary)] leading-relaxed mb-14"
 	>
-		This round evaluates your coding ability and your understanding of logic, algorithms,
-		and applied machine learning. You will complete two parts: a coding challenge and a
-		model-based submission.
+		This stage assesses your coding skills and your ability to apply machine learning.  
+		Complete both parts to finish Round 2 successfully.
 	</p>
 
-	<!-- Timeline / Steps -->
-	<div class="flex flex-col gap-10 mt-10 max-w-3xl mx-auto border-l border-neutral-300 dark:border-neutral-700 pl-6">
+	<div class="relative max-w-3xl mx-auto space-y-12">
 
-		<!-- Part 1 -->
-		<div in:slide={{ duration: 300 }} class="relative">
-			<div class="absolute -left-[13px] top-1 w-4 h-4 rounded-full bg-[--color]"></div>
+		{#each parts as part, i}
+			<div in:slide={{ duration: 250 + i * 100 }} class="relative group">
+				<div
+					class="p-6 rounded-xl bg-[var(--card-bg)] border border-[var(--border)]
+					       shadow-lg transition-all group-hover:shadow-indigo-500/20"
+				>
+					<div class="flex items-center gap-3 mb-3">
+						<svelte:component this={part.icon} size="22" class="text-indigo-400" />
+						<h2 class="text-xl font-bold text-[var(--text-primary)]">{part.title}</h2>
+					</div>
 
-			<h2 class="text-xl font-semibold mb-1">Part 1 — Code Execution Task</h2>
+					<p class="text-[var(--text-secondary)] text-sm leading-relaxed mb-5">
+						{part.desc}
+					</p>
 
-			<p class="text-sm opacity-80 mb-4">
-				Write and run code for the given problem. Your solution will be automatically
-				graded against a set of hidden test cases.
-			</p>
+					<Button
+						class="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold"
+						on:click={() => goto(part.path)}
+					>
+						{part.id === 1 ? "Start Coding" : "Go to Submission Portal"}
+					</Button>
+				</div>
+			</div>
+		{/each}
 
-			<Button on:click={() => goto('/round/2/code')}>Start Coding</Button>
-		</div>
-
-		<!-- Part 2 -->
-		<div in:slide={{ duration: 350 }} class="relative">
-			<div class="absolute -left-[13px] top-1 w-4 h-4 rounded-full bg-[--color]"></div>
-
-			<h2 class="text-xl font-semibold mb-1">Part 2 — ML Submission</h2>
-
-			<p class="text-sm opacity-80 mb-4">
-				Download the dataset, build your model, generate <code>submission.csv</code>,
-				and upload it along with your <code>.ipynb</code> notebook.  
-				Your accuracy & mismatch score will be computed automatically.
-			</p>
-
-			<Button on:click={() => goto('/round/2/ml')}>Go to Submission Portal</Button>
-		</div>
 	</div>
 </section>
+
+<style>
+	@keyframes fadeIn {
+		from { opacity: 0; transform: translateY(12px); }
+		to { opacity: 1; transform: translateY(0); }
+	}
+	.animate-fadeIn {
+		animation: fadeIn 0.4s ease-out;
+	}
+</style>

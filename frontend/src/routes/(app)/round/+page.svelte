@@ -1,63 +1,87 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { Button } from '$lib/components/ui/button';
-	import { studentProblems, professionalProblems } from '$lib/data/problems';
 	import { slide, fade } from 'svelte/transition';
 
 	let track = 'student';
 	let openId: number | null = null;
 
-	const list = () => (track === 'student' ? studentProblems : professionalProblems);
-
-	const toggle = (id: number) => {
-		openId = openId === id ? null : id;
-	};
-
 	const rounds = [
 		{
 			id: 1,
 			title: 'Round 1 — Quiz',
-			description: 'A timed MCQ-based quiz testing core CS + logical thinking.',
-			path: '/round/exams'
+			description: 'A timed multiple-choice quiz that evaluates foundational CS knowledge, reasoning, and problem-solving speed.',
+			path: '/round/1'
 		},
 		{
 			id: 2,
 			title: 'Round 2 — Coding',
-			description: 'Two-part coding round with code execution + ML submission.',
+			description: 'A two-stage coding assessment featuring a structured coding problem and an ML submission challenge.',
 			path: '/round/2'
 		}
 	];
 </script>
 
-<section id="round" class="relative mx-auto max-w-7xl px-6 md:px-8">
-	<div class="max-w-6xl mx-auto px-4 py-12 flex flex-col justify-center items-center">
+<section id="round" class="relative mx-auto max-w-7xl px-6 md:px-8 py-20 animate-fadeIn">
 
-		<!-- Heading -->
-		<h1
-			class="text-2xl sm:text-3xl lg:text-4xl text-center animate-fade-in text-balance lg:text-right 
-      bg-gradient-to-br from-black from-30% to-black/40 bg-clip-text font-bold leading-none tracking-tighter 
-      text-transparent opacity-0 [--animation-delay:200ms] dark:from-white dark:to-white/40 p-10"
-		>
-			Problem statement
+	<!-- Heading -->
+	<div class="text-center mb-16">
+		<h1 class="text-4xl md:text-5xl font-extrabold text-[var(--text-primary)] tracking-tight mb-3 relative inline-block">
+			Problem Statement
+			<span class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-32 h-[3px] bg-indigo-500 rounded-full"></span>
 		</h1>
 
-		<div class="w-full max-w-3xl mb-12">
-			<h2 class="text-xl font-semibold mb-6">Competition Rounds</h2>
+		<p class="text-lg text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed">
+			The competition consists of two stages designed to evaluate your concepts, logic, coding ability, and ML intuition.
+		</p>
+	</div>
 
-			<div class="flex flex-col gap-6 border-l-2 border-neutral-300 dark:border-neutral-700 pl-6">
-				{#each rounds as r}
-					<div class="relative">
-						<!-- Dot -->
-						<div class="absolute -left-[13px] top-1 w-4 h-4 bg-[--color] rounded-full"></div>
+	<!-- Timeline / Rounds List -->
+	<div class="max-w-3xl mx-auto">
 
-						<h3 class="text-lg font-bold">{r.title}</h3>
-						<p class="text-sm opacity-80 max-w-xl mb-3">{r.description}</p>
+		<h2 class="text-2xl font-semibold mb-8 text-[var(--text-primary)]">
+			Competition Rounds
+		</h2>
 
-						<Button on:click={() => goto(r.path)}>Go to Round {r.id}</Button>
+		<div class="relative space-y-10">
+			
+			{#each rounds as r, i}
+				<div class="relative group">
+
+					
+					<!-- Card -->
+					<div
+						in:slide={{ duration: 300 }}
+						class="p-6 rounded-xl border border-[var(--border)] bg-[var(--card-bg)]
+							   shadow-lg group-hover:shadow-indigo-500/20 transition-all duration-200"
+					>
+						<h3 class="text-xl font-bold text-[var(--text-primary)] mb-2">
+							{r.title}
+						</h3>
+
+						<p class="text-[var(--text-secondary)] text-sm leading-relaxed mb-4">
+							{r.description}
+						</p>
+
+						<Button
+							class="bg-indigo-500 hover:bg-indigo-600 text-white font-semibold"
+							on:click={() => goto(r.path)}
+						>
+							Go to Round {r.id}
+						</Button>
 					</div>
-				{/each}
-			</div>
+				</div>
+			{/each}
 		</div>
-
 	</div>
 </section>
+
+<style>
+	@keyframes fadeIn {
+		from { opacity: 0; transform: translateY(12px); }
+		to { opacity: 1; transform: translateY(0); }
+	}
+	.animate-fadeIn {
+		animation: fadeIn 0.4s ease-out;
+	}
+</style>

@@ -30,7 +30,7 @@
 		</div>
 
 	{:else}
-		
+    
 		<!-- Success result -->
 		<div 
 			class="p-6 rounded-2xl border border-green-600/40 bg-green-600/10 
